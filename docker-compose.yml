@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employeecrud
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  employee-app:
+    build: .
+    container_name: employee-app
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/employeecrud
+      DB_DRIVER: com.mysql.cj.jdbc.Driver
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      JWT_SECRETKEY: 668966dff212df0cf642e69ca07aa642bc54fa9e11420705c8011d502f65bb6b
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
