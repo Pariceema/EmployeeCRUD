@@ -242,3 +242,8 @@ Please give this repository a **Star ⭐**.
 This project is created for learning and portfolio purposes.
 
 ## Swagger Documentation (Coming Soon)
+
+
+## Developer A
+
+This line was added by Developer A.
