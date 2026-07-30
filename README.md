@@ -242,3 +242,5 @@ Please give this repository a **Star ⭐**.
 This project is created for learning and portfolio purposes.
 
 ## Swagger Documentation (Coming Soon)
+
+Swagger integration completed by Developer B.
