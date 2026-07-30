@@ -247,3 +247,4 @@ This project is created for learning and portfolio purposes.
 ## Developer A
 
 This line was added by Developer A.
+Swagger integration completed by Developer B.
