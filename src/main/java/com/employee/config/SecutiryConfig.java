@@ -28,21 +28,34 @@ public class SecutiryConfig {
 public SecurityFilterChain sfchain(HttpSecurity httpsecurity) throws Exception{
 	
 	httpsecurity.csrf(csrf->csrf.disable())
-	.authorizeHttpRequests(auth->auth.requestMatchers("/api/v2/**").hasAnyRole("USER")
-			.requestMatchers("/api/v1/**").hasAnyRole("ADMIN")
-			.requestMatchers("/api/images/**").hasAnyRole("USER")
-			.requestMatchers("/api/userlogin/**").permitAll()
-			.anyRequest().authenticated())		
-			//.formLogin(form->form.permitAll())
-			//.httpBasic(Customizer.withDefaults())
-	
-		.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.authenticationProvider(authenticationprovider)
-		.addFilterBefore(jwtauthenticationfilter, UsernamePasswordAuthenticationFilter.class)
-		
-		
-	;
-	
+	.authorizeHttpRequests(auth -> auth
+
+	        // Swagger
+	        .requestMatchers(
+	                "/swagger-ui/**",
+	                "/swagger-ui.html",
+	                "/v3/api-docs/**"
+	        ).permitAll()
+
+	        // Public APIs
+	        .requestMatchers("/api/userlogin/**").permitAll()
+
+	        // User APIs
+	        .requestMatchers("/api/v2/**").hasRole("USER")
+
+	        // Admin APIs
+	        .requestMatchers("/api/v1/**").hasRole("ADMIN")
+
+	        // Images
+	        .requestMatchers("/api/images/**").hasRole("USER")
+
+	        .anyRequest().authenticated()
+	        )
+	        .sessionManagement(session ->
+            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authenticationProvider(authenticationprovider)
+        .addFilterBefore(jwtauthenticationfilter,
+                UsernamePasswordAuthenticationFilter.class);
 	
 	return httpsecurity.build();
 	
