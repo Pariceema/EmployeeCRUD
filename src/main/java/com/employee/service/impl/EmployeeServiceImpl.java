@@ -109,7 +109,10 @@ public class EmployeeServiceImpl implements Employeeservice{
 		paginationresponse.setTotalpage(page.getTotalPages());
 		return paginationresponse;
 	}
-	
+	@Override
+	public Employee saveEmployee(Employee employee) {
+	    return employeerepo.save(employee);
+	}
 	
 	private Employee employeedtotoemployee(Employeedto employeedto) {
 		return this.modelmapper.map(employeedto, Employee.class);

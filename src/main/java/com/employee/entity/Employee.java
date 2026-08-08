@@ -24,7 +24,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 @Entity
 @Table(name="emp")
 @EntityListeners(AuditingEntityListener.class)
@@ -35,19 +38,26 @@ public class Employee{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank(message = "Employee ID is required")
+	@Size(min = 3, max = 20, message = "Employee ID must be between 3 and 20 characters")
 	@Column(name="emp_id",nullable = false,unique = true)
 	private String empId;
 	
+	@NotBlank(message = "Employee name is required")
+	@Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
 	@Column(name="emp_name",nullable=false)	
 	private String name;
 	
+	@NotBlank(message = "Designation is required")
 	@Column(name="emp_email",nullable=false,unique=true)
 	private String email;
 	
 	@Column(name="emp_design",nullable=false)
 	private String designation;
 	
+	@NotBlank(message = "Password is required")
+	@Size(min = 6, message = "Password must contain at least 6 characters")
 	@Column(name="Password",nullable=false)
 	private String password;
 	
@@ -61,6 +71,7 @@ public class Employee{
 	
 	private LocalDateTime lastlogin;
 
+	@NotNull(message = "Role is required")
 	@Enumerated(EnumType.STRING)
 	private Role roles;
 	
